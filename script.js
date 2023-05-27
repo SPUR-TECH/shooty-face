@@ -1,7 +1,7 @@
 addEventListener('load', function () {
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
-    canvas.width = 500;
+    canvas.width = 1500;
     canvas.height = 500;
 
     let startingY, movingY;
@@ -13,6 +13,8 @@ addEventListener('load', function () {
                         (e.key === 'ArrowDown')
                     ) && this.game.keys.indexOf(e.key) === -1) {
                     this.game.keys.push(e.key);
+                } else if (e.key === ' ') {
+                    this.game.player.shootTop();
                 }
                 console.log(this.game.keys);
             });
@@ -34,9 +36,9 @@ addEventListener('load', function () {
             });
 
             window.addEventListener("touchend", e => {
-                if (startingY + 50 < movingY) {
+                if (startingY + 1 < movingY) {
                     console.log('down')
-                } else if (startingY - 50 > movingY) {
+                } else if (startingY - 1 > movingY) {
                     console.log('up')
                 }
             });
@@ -44,7 +46,26 @@ addEventListener('load', function () {
     }
 
     class Projectile {
+        constructor(game, x, y) {
+            this.game = game;
+            this.x = x;
+            this.y = y;
+            this.width = 10;
+            this.height = 3;
+            this.speed = 3;
+            this.markedForDeletion = false;
+        }
 
+        update() {
+            this.x += this.speed;
+            if (this.x > this.game.width * 0.8) this.markedForDeletion = true;
+        }
+
+        draw(context) {
+            context.fillStyle = 'yellow';
+            context.fillRect(this.x, this.y, this, this.width, this.height)
+
+        }
     }
 
     class Particle {
@@ -60,21 +81,37 @@ addEventListener('load', function () {
             this.y = 100;
             this.speedY = 0;
             this.maxSpeed = 4;
+            this.projectiles = [];
         }
 
         update() {
             if (this.game.keys.includes('ArrowUp')) this.speedY = -this.maxSpeed;
             else if (this.game.keys.includes('ArrowDown')) this.speedY = this.maxSpeed;
 
-            else if (startingY + 50 < movingY) this.speedY = this.maxSpeed;
-            else if (startingY - 50 > movingY) this.speedY = -this.maxSpeed;
+            else if (startingY + 1 < movingY) this.speedY = this.maxSpeed;
+            else if (startingY - 1 > movingY) this.speedY = -this.maxSpeed;
 
             else this.speedY = 0;
             this.y += this.speedY;
+
+            // Handle projectiles
+            this.projectiles.forEach(projectile => {
+                projectile.update();
+            });
+            this.projectiles = this.projectiles.filter(projectile => !projectile.markedForDeletion);
         }
 
         draw(context) {
+            context.fillStyle = 'black'
             context.fillRect(this.x, this.y, this.width, this.height);
+            this.projectiles.forEach(projectile => {
+                projectile.draw(context);
+            });
+        }
+
+        shootTop() {
+            this.projectiles.push(new Projectile(this.game, this.x + 80, this.y + 30));
+            console.log(this.projectiles);
         }
 
     }
