@@ -29,6 +29,7 @@ addEventListener('load', function () {
 
             window.addEventListener("touchstart", e => {
                 startingY = e.touches[0].clientY;
+                this.game.player.shootTop();
             });
 
             window.addEventListener("touchmove", e => {
