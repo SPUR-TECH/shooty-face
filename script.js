@@ -26,29 +26,27 @@ addEventListener('load', function () {
             });
 
             const fire = document.getElementById("shoot")
-            fire.addEventListener("touchstart", e => {
+            fire.addEventListener("click", e => {
                 e.preventDefault()
                 this.game.player.shootTop();
             });
+            const moveUp = document.getElementById("moveUp")
+            window.addEventListener("touchstart", e => {
+                startingY = e.touches[0].clientY;
 
+            });
 
+            window.addEventListener("touchmove", e => {
+                movingY = e.touches[0].clientY;
+            });
 
-            // window.addEventListener("touchstart", e => {
-            //     startingY = e.touches[0].clientY;
-            //     this.game.player.shootTop();
-            // });
-
-            // window.addEventListener("touchmove", e => {
-            //     movingY = e.touches[0].clientY;
-            // });
-
-            // window.addEventListener("touchend", e => {
-            //     if (startingY + 1 < movingY) {
-            //         console.log('down')
-            //     } else if (startingY - 1 > movingY) {
-            //         console.log('up')
-            //     }
-            // });
+            window.addEventListener("touchend", e => {
+                if (startingY + 1 < movingY) {
+                    console.log('down')
+                } else if (startingY - 1 > movingY) {
+                    console.log('up')
+                }
+            });
         }
     }
 

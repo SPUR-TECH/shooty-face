@@ -12,7 +12,7 @@ body {
     background-color: black;
     font-family: sans-serif;
     font-size: 14px;
-    touch-action: pan-y;
+    touch-action: none;
 }
 
 #move-buttons {
@@ -30,7 +30,7 @@ body {
 
 #shoot-button-div {
     position: absolute;
-    top: 40%;
+    top: 45%;
     right: 0;
     margin-right: 20px;
     width: 50px;
