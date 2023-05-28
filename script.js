@@ -26,7 +26,7 @@ addEventListener('load', function () {
             });
 
             const fire = document.getElementById("shoot")
-            fire.addEventListener("click", e => {
+            fire.addEventListener("touchstart", e => {
                 e.preventDefault()
                 this.game.player.shootTop();
             });
