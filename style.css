@@ -4,8 +4,41 @@
     box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    font-family: sans-serif;
+    font-size: 14px;
+    touch-action: pan-y;
+}
+
+#move-buttons {
+    position: absolute;
+    top: 30%;
+    left: 0;
+    margin-left: 10px;
+    width: 50px;
+    z-index: 100;
+}
+
+#moveUp {
+    margin-bottom: 40px;
+}
+
+#shoot-button-div {
+    position: absolute;
+    top: 40%;
+    right: 0;
+    margin-right: 20px;
+    width: 50px;
+    z-index: 100;
+}
+
 #canvas1 {
-    border: 5px solid black;
+    border: 5px solid red;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -16,6 +49,25 @@
     font-family: 'Bangers', cursive;
 }
 
-#layer1, #layer2, #layer3, #layer4, #player, #angler1, #angler2, #lucky, #projectile, #gears, #hivewhale, #drone, #smokeExplosion, #fireExplosion, #bulbwhale, #moonfish, #shield, #fireball, #stalker, #razorfin {
+#layer1,
+#layer2,
+#layer3,
+#layer4,
+#player,
+#angler1,
+#angler2,
+#lucky,
+#projectile,
+#gears,
+#hivewhale,
+#drone,
+#smokeExplosion,
+#fireExplosion,
+#bulbwhale,
+#moonfish,
+#shield,
+#fireball,
+#stalker,
+#razorfin {
     display: none;
 }
