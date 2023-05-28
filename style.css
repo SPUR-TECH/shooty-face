@@ -15,18 +15,13 @@ body {
 }
 
 #top-arrow {
+    margin-top: 20px;
     margin-bottom: -7px;
     margin-left: -20px;
 }
 
-#turn-phone {
-
-    z-index: 100;
-}
-
 #bottom-arrow {
-    margin-left: 100px;
-    margin-top: -7px;
+    margin-left: 110px;
 }
 
 #move-buttons {
