@@ -34,7 +34,6 @@ body {
     left: 0;
     margin-left: 10px;
     width: 50px;
-    z-index: 100;
 }
 
 #moveUp {
@@ -59,7 +58,6 @@ body {
     right: 0;
     margin-right: 20px;
     width: 50px;
-    z-index: 100;
 }
 
 #canvas1 {
