@@ -18,13 +18,11 @@ addEventListener('load', function () {
                 } else if (e.key === 'd') {
                     this.game.debug = !this.game.debug;
                 }
-                console.log(this.game.keys);
             });
             window.addEventListener('keyup', e => {
                 if (this.game.keys.indexOf(e.key) > -1) {
                     this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
                 }
-                console.log(this.game.keys);
             });
 
             const fire = document.getElementById("shoot")
@@ -40,14 +38,17 @@ addEventListener('load', function () {
 
             window.addEventListener("touchmove", e => {
                 movingY = e.touches[0].clientY;
+                if (startingY + 50 < movingY) {} else if (startingY - 5 > movingY) {}
             });
 
             window.addEventListener("touchend", e => {
-                if (startingY + 1 < movingY) {
-                    console.log('down')
-                } else if (startingY - 1 > movingY) {
-                    console.log('up')
-                }
+                this.game.player.speedY = 0;
+
+            });
+
+            window.addEventListener("touchcancel", e => {
+                this.game.player.speedY = 0;
+
             });
         }
     }
@@ -209,8 +210,8 @@ addEventListener('load', function () {
         update(deltaTime) {
             if (this.game.keys.includes('ArrowUp')) this.speedY = -this.maxSpeed;
             else if (this.game.keys.includes('ArrowDown')) this.speedY = this.maxSpeed;
-            else if (startingY + 1 < movingY) this.speedY = this.maxSpeed;
-            else if (startingY - 1 > movingY) this.speedY = -this.maxSpeed;
+            else if (startingY + 50 < movingY) this.speedY = this.maxSpeed;
+            else if (startingY - 50 > movingY) this.speedY = -this.maxSpeed;
             else this.speedY = 0;
             this.y += this.speedY;
             // vertical boundaries
