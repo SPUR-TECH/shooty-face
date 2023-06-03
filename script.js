@@ -62,7 +62,7 @@ addEventListener('load', function () {
             this.explosionSound = document.getElementById('explosion');
             this.shotSound = document.getElementById('shot');
             this.hitSound = document.getElementById('hit');
-            // this.shieldSound = document.getElementById('shieldSound');
+            this.shieldSound = document.getElementById('shieldSound');
         }
         powerUp() {
             this.powerUpSound.currentTime = 0;
@@ -84,42 +84,42 @@ addEventListener('load', function () {
             this.hitSound.currentTime = 0;
             this.hitSound.play();
         }
-        // shield() {
-        //     this.shieldSound.currentTime = 0;
-        //     this.shieldSound.play();
-        // }
+        shield() {
+            this.shieldSound.currentTime = 0;
+            this.shieldSound.play();
+        }
     }
-    // class Shield {
-    //     constructor(game) {
-    //         this.game = game;
-    //         this.width = this.game.player.width;
-    //         this.height = this.game.player.height;
-    //         this.frameX = 0;
-    //         this.maxFrame = 24;
-    //         this.image = document.getElementById('shield');
-    //         this.fps = 60;
-    //         this.timer = 0;
-    //         this.interval = 1000 / this.fps;
-    //     }
-    //     update(deltaTime) {
-    //         if (this.frameX <= this.maxFrame) {
-    //             if (this.timer > this.interval) {
-    //                 this.frameX++;
-    //                 this.timer = 0;
-    //             } else {
-    //                 this.timer += deltaTime;
-    //             }
+    class Shield {
+        constructor(game) {
+            this.game = game;
+            this.width = this.game.player.width;
+            this.height = this.game.player.height;
+            this.frameX = 0;
+            this.maxFrame = 24;
+            this.image = document.getElementById('shield');
+            this.fps = 60;
+            this.timer = 0;
+            this.interval = 1000 / this.fps;
+        }
+        update(deltaTime) {
+            if (this.frameX <= this.maxFrame) {
+                if (this.timer > this.interval) {
+                    this.frameX++;
+                    this.timer = 0;
+                } else {
+                    this.timer += deltaTime;
+                }
 
-    //         }
-    //     }
-    //     draw(context) {
-    //         context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.game.player.x, this.game.player.y, this.width, this.height);
-    //     }
-    //     reset() {
-    //         this.frameX = 0;
-    //         this.game.sound.shield();
-    //     }
-    // }
+            }
+        }
+        draw(context) {
+            context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.game.player.x, this.game.player.y, this.width, this.height);
+        }
+        reset() {
+            this.frameX = 0;
+            this.game.sound.shield();
+        }
+    }
 
     class Projectile {
         constructor(game, x, y) {
@@ -194,7 +194,7 @@ addEventListener('load', function () {
     class Player {
         constructor(game) {
             this.game = game;
-            this.width = 100;
+            this.width = 90;
             this.height = 100;
             this.x = 50;
             this.y = 200;
@@ -280,15 +280,15 @@ addEventListener('load', function () {
             this.markedForDeletion = false;
             this.frameX = 0;
             this.frameY = 0;
-            this.maxFrame = 37;
+            // this.maxFrame = 37;
         }
         update() {
             this.x += this.speedX - this.game.speed;
             if (this.x + this.width < 0) this.markedForDeletion = true;
             // sprite animation
-            if (this.frameX < this.maxFrame) {
-                this.frameX++;
-            } else this.frameX = 0;
+            // if (this.frameX < this.maxFrame) {
+            //     this.frameX++;
+            // } else this.frameX = 0;
         }
         draw(context) {
             if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
@@ -299,112 +299,115 @@ addEventListener('load', function () {
             }
         }
     }
+    class LuckyFish extends Enemy {
+        constructor(game) {
+            super(game);
+            this.width = 50;
+            this.height = 40;
+            this.y = Math.random() * (this.game.height * 0.95 - this.height);
+            this.image = document.getElementById('lucky');
+            // this.frameY = Math.floor(Math.random() * 2);
+            this.lives = 5;
+            this.score = 10;
+            this.type = 'lucky';
+        }
+    }
     class Angler1 extends Enemy {
         constructor(game) {
             super(game);
-            this.width = 228;
-            this.height = 169;
+            this.width = 100;
+            this.height = 90;
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('angler1');
-            this.frameY = Math.floor(Math.random() * 3);
-            this.lives = 3;
+            // this.frameY = Math.floor(Math.random() * 3);
+            this.lives = 5;
             this.score = this.lives;
         }
     }
     class Angler2 extends Enemy {
         constructor(game) {
             super(game);
-            this.width = 213;
-            this.height = 165;
+            this.width = 100;
+            this.height = 50;
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('angler2');
-            this.frameY = Math.floor(Math.random() * 2);
+            // this.frameY = Math.floor(Math.random() * 2);
             this.lives = 4;
             this.score = this.lives;
         }
     }
-    class LuckyFish extends Enemy {
+    class HiveWhale extends Enemy {
         constructor(game) {
             super(game);
-            this.width = 99;
-            this.height = 95;
+            this.width = 210;
+            this.height = 140;
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
-            this.image = document.getElementById('lucky');
-            this.frameY = Math.floor(Math.random() * 2);
-            this.lives = 5;
-            this.score = 10;
-            this.type = 'lucky';
+            this.image = document.getElementById('hivewhale');
+            this.frameY = 0;
+            this.lives = 10;
+            this.score = this.lives;
+            this.type = 'hive';
+            this.speedX = Math.random() * -1.2 - 0.2;
         }
     }
-    // class HiveWhale extends Enemy {
-    //     constructor(game) {
-    //         super(game);
-    //         this.width = 400;
-    //         this.height = 227;
-    //         this.y = Math.random() * (this.game.height * 0.95 - this.height);
-    //         this.image = document.getElementById('hivewhale');
-    //         this.frameY = 0;
-    //         this.lives = 20;
-    //         this.score = this.lives;
-    //         this.type = 'hive';
-    //         this.speedX = Math.random() * -1.2 - 0.2;
-    //     }
-    // }
+
     class Drone extends Enemy {
         constructor(game, x, y) {
             super(game);
-            this.width = 115;
-            this.height = 95;
+            this.width = 50;
+            this.height = 30;
             this.x = x;
             this.y = y;
             this.image = document.getElementById('drone');
-            this.frameY = Math.floor(Math.random() * 2);
-            this.lives = 3;
+            // this.frameY = Math.floor(Math.random() * 2);
+            this.lives = 1;
             this.score = this.lives;
             this.type = 'drone';
             this.speedX = Math.random() * -4.2 - 0.5;
         }
     }
-    // class BulbWhale extends Enemy {
+
+    class BulbWhale extends Enemy {
+        constructor(game) {
+            super(game);
+            this.width = 170;
+            this.height = 60;
+            this.y = Math.random() * (this.game.height * 0.95 - this.height);
+            this.image = document.getElementById('bulbwhale');
+            // this.frameY = Math.floor(Math.random() * 2);
+            this.lives = 20;
+            this.score = this.lives;
+            this.speedX = Math.random() * -1.2 - 0.2;
+        }
+    }
+
+    // class MoonFish extends Enemy {
     //     constructor(game) {
     //         super(game);
-    //         this.width = 270;
-    //         this.height = 219;
+    //         this.width = 227;
+    //         this.height = 240;
     //         this.y = Math.random() * (this.game.height * 0.95 - this.height);
-    //         this.image = document.getElementById('bulbwhale');
-    //         this.frameY = Math.floor(Math.random() * 2);
-    //         this.lives = 20;
+    //         this.image = document.getElementById('moonfish');
+    //         this.frameY = 0;
+    //         this.lives = 7;
     //         this.score = this.lives;
-    //         this.speedX = Math.random() * -1.2 - 0.2;
+    //         this.speedX = Math.random() * -1.2 - 2;
+    //         this.type = 'moon';
     //     }
     // }
-    class MoonFish extends Enemy {
-        constructor(game) {
-            super(game);
-            this.width = 227;
-            this.height = 240;
-            this.y = Math.random() * (this.game.height * 0.95 - this.height);
-            this.image = document.getElementById('moonfish');
-            this.frameY = 0;
-            this.lives = 7;
-            this.score = this.lives;
-            this.speedX = Math.random() * -1.2 - 2;
-            this.type = 'moon';
-        }
-    }
-    class Stalker extends Enemy {
-        constructor(game) {
-            super(game);
-            this.width = 243;
-            this.height = 123;
-            this.y = Math.random() * (this.game.height * 0.95 - this.height);
-            this.image = document.getElementById('stalker');
-            this.frameY = 0;
-            this.lives = 5;
-            this.score = this.lives;
-            this.speedX = Math.random() * -1 - 1;
-        }
-    }
+    // class Stalker extends Enemy {
+    //     constructor(game) {
+    //         super(game);
+    //         this.width = 243;
+    //         this.height = 123;
+    //         this.y = Math.random() * (this.game.height * 0.95 - this.height);
+    //         this.image = document.getElementById('stalker');
+    //         this.frameY = 0;
+    //         this.lives = 5;
+    //         this.score = this.lives;
+    //         this.speedX = Math.random() * -1 - 1;
+    //     }
+    // }
     // class Razorfin extends Enemy {
     //     constructor(game) {
     //         super(game);
@@ -558,7 +561,7 @@ addEventListener('load', function () {
             this.input = new InputHandler(this);
             this.ui = new UI(this);
             this.sound = new SoundController();
-            // this.shield = new Shield(this);
+            this.shield = new Shield(this);
             this.keys = [];
             this.enemies = [];
             this.particles = [];
@@ -589,7 +592,7 @@ addEventListener('load', function () {
             } else {
                 this.ammoTimer += deltaTime;
             }
-            // this.shield.update(deltaTime);
+            this.shield.update(deltaTime);
             this.particles.forEach(particle => particle.update());
             this.particles = this.particles.filter(particle => !particle.markedForDeletion);
             this.explosions.forEach(explosion => explosion.update(deltaTime));
@@ -600,7 +603,7 @@ addEventListener('load', function () {
                     enemy.markedForDeletion = true;
                     this.addExplosion(enemy);
                     this.sound.hit();
-                    // this.shield.reset();
+                    this.shield.reset();
                     for (let i = 0; i < 3; i++) {
                         this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                     }
@@ -643,7 +646,7 @@ addEventListener('load', function () {
             this.background.draw(context);
             this.ui.draw(context);
             this.player.draw(context);
-            // this.shield.draw(context);
+            this.shield.draw(context);
             this.particles.forEach(particle => particle.draw(context));
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
@@ -656,12 +659,12 @@ addEventListener('load', function () {
         addEnemy() {
             const randomize = Math.random();
             if (randomize < 0.1) this.enemies.push(new Angler1(this));
-            else if (randomize < 0.3) this.enemies.push(new Stalker(this));
+            // else if (randomize < 0.3) this.enemies.push(new Stalker(this));
             // else if (randomize < 0.5) this.enemies.push(new Razorfin(this));
             else if (randomize < 0.6) this.enemies.push(new Angler2(this));
-            // else if (randomize < 0.7) this.enemies.push(new HiveWhale(this));
-            // else if (randomize < 0.8) this.enemies.push(new BulbWhale(this));
-            else if (randomize < 0.9) this.enemies.push(new MoonFish(this));
+            else if (randomize < 0.7) this.enemies.push(new HiveWhale(this));
+            else if (randomize < 0.8) this.enemies.push(new BulbWhale(this));
+            // else if (randomize < 0.9) this.enemies.push(new MoonFish(this));
             else this.enemies.push(new LuckyFish(this));
         }
         addExplosion(enemy) {
