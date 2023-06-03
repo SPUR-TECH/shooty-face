@@ -39,6 +39,7 @@ body {
 
 #moveUp {
     margin-bottom: 12px;
+    cursor: pointer;
 }
 
 #hold {
@@ -51,6 +52,11 @@ body {
 
 #swipe {
     margin-left: 2px;
+}
+
+#moveDown {
+    margin-top: 20px;
+    cursor: pointer;
 }
 
 #shoot-button-div {

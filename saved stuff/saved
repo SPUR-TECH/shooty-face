@@ -1,0 +1,100 @@
+let keys = {
+    ArrowUp: {
+        pressed: false
+    },
+    ArrowDown: {
+        pressed: false
+    },
+    space: {
+        pressed: false
+    },
+    d: {
+        pressed: false
+    }
+}
+
+
+
+addEventListener('keydown', ({
+    key
+}) => {
+    switch (key) {
+        case 'ArrowUp':
+            keys.ArrowUp.pressed = true
+            break
+        case 'ArrowDown':
+            keys.ArrowDown.pressed = true
+            break
+        case ' ':
+            keys.space.pressed = true
+            break
+        case 'd':
+            keys.d.pressed = true
+            break
+    }
+});
+
+addEventListener('keyup', ({
+    key
+}) => {
+    switch (key) {
+        case 'ArrowUp':
+            keys.ArrowUp.pressed = false
+            break
+        case 'ArrowDown':
+            keys.ArrowDown.pressed = false
+            break
+        case ' ':
+            keys.space.pressed = false
+            break
+        case 'd':
+            keys.d.pressed = false
+            break
+    }
+});
+
+
+
+const moveUp = document.getElementById("moveUp")
+window.addEventListener("touchstart", e => {
+    keys.ArrowUp.pressed = true
+});
+
+const Up = document.getElementById("moveUp")
+moveUp.addEventListener("touchmove", e => {
+    e.preventDefault()
+    keys.ArrowUp.pressed = true
+});
+
+const moveDown = document.getElementById("moveDown")
+window.addEventListener("touchstart", e => {
+    keys.ArrowDown.pressed = true
+});
+
+const Down = document.getElementById("moveDown")
+moveDown.addEventListener("touchmove", e => {
+    e.preventDefault()
+    keys.ArrowDown.pressed = true
+});
+
+addEventListener("touchend", e => {
+    keys.ArrowUp.pressed = false,
+        keys.ArrowDown.pressed = false
+});
+
+addEventListener("touchcancel", e => {
+    keys.ArrowUp.pressed = false,
+        keys.ArrowDown.pressed = false
+});
+
+const fire = document.getElementById("shoot")
+fire.addEventListener("click", e => {
+    this.game.player.shootTop();
+});
+
+
+update(deltaTime) {
+        if (keys.ArrowUp.pressed) this.speedY = -this.maxSpeed;
+        else if (keys.ArrowDown.pressed) this.speedY = this.maxSpeed;
+        else if (keys.space.pressed) this.game.player.shootTop();
+        else if (keys.d.pressed) this.game.debug = !this.game.debug;
