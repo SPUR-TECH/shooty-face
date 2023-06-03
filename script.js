@@ -24,114 +24,54 @@ addEventListener('load', function () {
         constructor(game) {
             this.game = game;
 
-            addEventListener('keydown', ({
-                key
-            }) => {
-                switch (key) {
-                    case 'ArrowUp':
-                        keys.ArrowUp.pressed = true
-                        break
-                    case 'ArrowDown':
-                        keys.ArrowDown.pressed = true
-                        break
-                    case ' ':
-                        keys.space.pressed = true
-                        break
-                    case 'd':
-                        keys.d.pressed = true
-                        break
+            // Keyboard input
+            document.addEventListener("keydown", (event) => {
+                switch (event.code) {
+                    case "ArrowUp":
+                        keys.ArrowUp.pressed = true;
+                        break;
+                    case "ArrowDown":
+                        keys.ArrowDown.pressed = true;
+                        break;
                 }
-            })
+            });
 
-            addEventListener('keyup', ({
-                key
-            }) => {
-                switch (key) {
-                    case 'ArrowUp':
-                        keys.ArrowUp.pressed = false
-                        break
-                    case 'ArrowDown':
-                        keys.ArrowDown.pressed = false
-                        break
-                    case ' ':
-                        keys.space.pressed = false
-                        break
-                    case 'd':
-                        keys.d.pressed = false
-                        break
+            document.addEventListener("keyup", (event) => {
+                switch (event.code) {
+                    case "ArrowUp":
+                        keys.ArrowUp.pressed = false;
+                        break;
+                    case "ArrowDown":
+                        keys.ArrowDown.pressed = false;
+                        break;
                 }
-            })
+            });
 
+            // Touch input
             const moveUp = document.getElementById("moveUp");
-            moveUp.addEventListener("touchstart", e => {
+            moveUp.addEventListener("touchstart", (e) => {
                 e.preventDefault();
                 keys.ArrowUp.pressed = true;
             });
 
+            moveUp.addEventListener("touchend", (e) => {
+                keys.ArrowUp.pressed = false;
+            });
+
             const moveDown = document.getElementById("moveDown");
-            moveDown.addEventListener("touchstart", e => {
+            moveDown.addEventListener("touchstart", (e) => {
                 e.preventDefault();
                 keys.ArrowDown.pressed = true;
             });
 
-            addEventListener("touchend", e => {
-                keys.ArrowUp.pressed = false;
+            moveDown.addEventListener("touchend", (e) => {
                 keys.ArrowDown.pressed = false;
             });
 
-            addEventListener("touchcancel", e => {
-                keys.ArrowUp.pressed = false;
-                keys.ArrowDown.pressed = false;
-            });
-
-            const fire = document.getElementById("shoot")
-            fire.addEventListener("click", e => {
+            const fire = document.getElementById("shoot");
+            fire.addEventListener("click", (e) => {
                 this.game.player.shootTop();
             });
-            // window.addEventListener('keydown', e => {
-            //     if (((e.key === 'ArrowUp') ||
-            //             (e.key === 'ArrowDown')
-            //         ) && this.game.keys.indexOf(e.key) === -1) {
-            //         this.game.keys.push(e.key);
-            //     } else if (e.key === ' ') {
-            //         this.game.player.shootTop();
-            //     } else if (e.key === 'd') {
-            //         this.game.debug = !this.game.debug;
-            //     }
-            // });
-            // window.addEventListener('keyup', e => {
-            //     if (this.game.keys.indexOf(e.key) > -1) {
-            //         this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
-            //     }
-            // });
-
-            // const fire = document.getElementById("shoot")
-            // fire.addEventListener("touchstart", e => {
-            //     this.game.player.shootTop();
-            // });
-            // const moveUp = document.getElementById("moveUp")
-            // window.addEventListener("touchstart", e => {
-            //     startingY = e.touches[0].clientY;
-            // });
-
-            // window.addEventListener("touchmove", e => {
-            //     movingY = e.touches[0].clientY;
-            //     if (startingY + 50 < movingY) {
-            //         this.game.player.speedY = -this.game.player.maxSpeed;
-            //     } else if (startingY - 50 > movingY) {
-            //         this.game.player.speedY = this.game.player.maxSpeed;
-            //     } else {
-            //         this.game.player.speedY = 0;
-            //     }
-            // });
-
-            // window.addEventListener("touchend", e => {
-            //     this.game.player.speedY = 0;
-            // });
-
-            // window.addEventListener("touchcancel", e => {
-            //     this.game.player.speedY = 0;
-            // });
         }
     }
 
@@ -273,6 +213,7 @@ addEventListener('load', function () {
     }
     class Player {
         constructor(game) {
+
             this.game = game;
             this.width = 90;
             this.height = 100;
