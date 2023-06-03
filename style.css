@@ -12,6 +12,7 @@ body {
     background-color: black;
     font-family: sans-serif;
     font-size: 14px;
+    touch-action: none
 }
 
 #top-arrow {

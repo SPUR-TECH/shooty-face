@@ -27,28 +27,30 @@ addEventListener('load', function () {
 
             const fire = document.getElementById("shoot")
             fire.addEventListener("touchstart", e => {
-                e.preventDefault()
                 this.game.player.shootTop();
             });
             const moveUp = document.getElementById("moveUp")
             window.addEventListener("touchstart", e => {
                 startingY = e.touches[0].clientY;
-
             });
 
             window.addEventListener("touchmove", e => {
                 movingY = e.touches[0].clientY;
-                if (startingY + 50 < movingY) {} else if (startingY - 5 > movingY) {}
+                if (startingY + 50 < movingY) {
+                    this.game.player.speedY = -this.game.player.maxSpeed;
+                } else if (startingY - 50 > movingY) {
+                    this.game.player.speedY = this.game.player.maxSpeed;
+                } else {
+                    this.game.player.speedY = 0;
+                }
             });
 
             window.addEventListener("touchend", e => {
                 this.game.player.speedY = 0;
-
             });
 
             window.addEventListener("touchcancel", e => {
                 this.game.player.speedY = 0;
-
             });
         }
     }
