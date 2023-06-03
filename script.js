@@ -235,11 +235,11 @@ addEventListener('load', function () {
                 if (this.powerUpTimer > this.powerUpLimit) {
                     this.powerUpTimer = 0;
                     this.powerUp = false;
-                    this.frameY = 0;
+                    this.frameX = 0;
                     this.game.sound.powerDown();
                 } else {
                     this.powerUpTimer += deltaTime;
-                    this.frameY = 1;
+                    this.frameX = 0;
                     this.game.ammo += 0.1;
                 }
             }
