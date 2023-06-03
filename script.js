@@ -4,54 +4,134 @@ addEventListener('load', function () {
     canvas.width = 900;
     canvas.height = 500;
 
-    let startingY, movingY;
+    // let startingY, movingY;
+
+    const keys = {
+        ArrowUp: {
+            pressed: false
+        },
+        ArrowDown: {
+            pressed: false
+        },
+        space: {
+            pressed: false
+        },
+        d: {
+            pressed: false
+        }
+    }
     class InputHandler {
         constructor(game) {
             this.game = game;
-            window.addEventListener('keydown', e => {
-                if (((e.key === 'ArrowUp') ||
-                        (e.key === 'ArrowDown')
-                    ) && this.game.keys.indexOf(e.key) === -1) {
-                    this.game.keys.push(e.key);
-                } else if (e.key === ' ') {
-                    this.game.player.shootTop();
-                } else if (e.key === 'd') {
-                    this.game.debug = !this.game.debug;
+
+            addEventListener('keydown', ({
+                key
+            }) => {
+                switch (key) {
+                    case 'ArrowUp':
+                        keys.ArrowUp.pressed = true
+                        break
+                    case 'ArrowDown':
+                        keys.ArrowDown.pressed = true
+                        break
+                    case ' ':
+                        keys.space.pressed = true
+                        break
+                    case 'd':
+                        keys.d.pressed = true
+                        break
                 }
+            })
+
+            addEventListener('keyup', ({
+                key
+            }) => {
+                switch (key) {
+                    case 'ArrowUp':
+                        keys.ArrowUp.pressed = false
+                        break
+                    case 'ArrowDown':
+                        keys.ArrowDown.pressed = false
+                        break
+                    case ' ':
+                        keys.space.pressed = false
+                        break
+                    case 'd':
+                        keys.d.pressed = false
+                        break
+                }
+            })
+
+            const moveUp = document.getElementById("moveUp");
+            moveUp.addEventListener("touchstart", e => {
+                e.preventDefault();
+                keys.ArrowUp.pressed = true;
             });
-            window.addEventListener('keyup', e => {
-                if (this.game.keys.indexOf(e.key) > -1) {
-                    this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
-                }
+
+            const moveDown = document.getElementById("moveDown");
+            moveDown.addEventListener("touchstart", e => {
+                e.preventDefault();
+                keys.ArrowDown.pressed = true;
+            });
+
+            addEventListener("touchend", e => {
+                keys.ArrowUp.pressed = false;
+                keys.ArrowDown.pressed = false;
+            });
+
+            addEventListener("touchcancel", e => {
+                keys.ArrowUp.pressed = false;
+                keys.ArrowDown.pressed = false;
             });
 
             const fire = document.getElementById("shoot")
-            fire.addEventListener("touchstart", e => {
+            fire.addEventListener("click", e => {
                 this.game.player.shootTop();
             });
-            const moveUp = document.getElementById("moveUp")
-            window.addEventListener("touchstart", e => {
-                startingY = e.touches[0].clientY;
-            });
+            // window.addEventListener('keydown', e => {
+            //     if (((e.key === 'ArrowUp') ||
+            //             (e.key === 'ArrowDown')
+            //         ) && this.game.keys.indexOf(e.key) === -1) {
+            //         this.game.keys.push(e.key);
+            //     } else if (e.key === ' ') {
+            //         this.game.player.shootTop();
+            //     } else if (e.key === 'd') {
+            //         this.game.debug = !this.game.debug;
+            //     }
+            // });
+            // window.addEventListener('keyup', e => {
+            //     if (this.game.keys.indexOf(e.key) > -1) {
+            //         this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
+            //     }
+            // });
 
-            window.addEventListener("touchmove", e => {
-                movingY = e.touches[0].clientY;
-                if (startingY + 50 < movingY) {
-                    this.game.player.speedY = -this.game.player.maxSpeed;
-                } else if (startingY - 50 > movingY) {
-                    this.game.player.speedY = this.game.player.maxSpeed;
-                } else {
-                    this.game.player.speedY = 0;
-                }
-            });
+            // const fire = document.getElementById("shoot")
+            // fire.addEventListener("touchstart", e => {
+            //     this.game.player.shootTop();
+            // });
+            // const moveUp = document.getElementById("moveUp")
+            // window.addEventListener("touchstart", e => {
+            //     startingY = e.touches[0].clientY;
+            // });
 
-            window.addEventListener("touchend", e => {
-                this.game.player.speedY = 0;
-            });
+            // window.addEventListener("touchmove", e => {
+            //     movingY = e.touches[0].clientY;
+            //     if (startingY + 50 < movingY) {
+            //         this.game.player.speedY = -this.game.player.maxSpeed;
+            //     } else if (startingY - 50 > movingY) {
+            //         this.game.player.speedY = this.game.player.maxSpeed;
+            //     } else {
+            //         this.game.player.speedY = 0;
+            //     }
+            // });
 
-            window.addEventListener("touchcancel", e => {
-                this.game.player.speedY = 0;
-            });
+            // window.addEventListener("touchend", e => {
+            //     this.game.player.speedY = 0;
+            // });
+
+            // window.addEventListener("touchcancel", e => {
+            //     this.game.player.speedY = 0;
+            // });
         }
     }
 
@@ -200,7 +280,6 @@ addEventListener('load', function () {
             this.y = 200;
             this.frameX = 0;
             this.frameY = 0;
-            // this.maxFrame = 10;
             this.speedY = 0;
             this.maxSpeed = 3;
             this.projectiles = [];
@@ -210,10 +289,12 @@ addEventListener('load', function () {
             this.powerUpLimit = 10000;
         }
         update(deltaTime) {
-            if (this.game.keys.includes('ArrowUp')) this.speedY = -this.maxSpeed;
-            else if (this.game.keys.includes('ArrowDown')) this.speedY = this.maxSpeed;
-            else if (startingY + 50 < movingY) this.speedY = this.maxSpeed;
-            else if (startingY - 50 > movingY) this.speedY = -this.maxSpeed;
+            if (keys.ArrowUp.pressed) this.speedY = -this.maxSpeed;
+            else if (keys.ArrowDown.pressed) this.speedY = this.maxSpeed;
+            else if (keys.space.pressed) this.game.player.shootTop();
+            else if (keys.d.pressed) this.game.debug = !this.game.debug;
+            // else if (startingY + 50 < movingY) this.speedY = this.maxSpeed;
+            // else if (startingY - 50 > movingY) this.speedY = -this.maxSpeed;
             else this.speedY = 0;
             this.y += this.speedY;
             // vertical boundaries
