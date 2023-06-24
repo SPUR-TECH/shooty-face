@@ -38,25 +38,14 @@ body {
 }
 
 #moveUp {
-    margin-bottom: 80px;
+    margin-bottom: 60px;
     margin-top: 30px;
     cursor: pointer;
 }
 
-/* #hold {
-    margin-left: 5px;
-}
-
-#and {
-    margin-left: 17px;
-}
-
-#swipe {
-    margin-left: 2px;
-} */
 
 #moveDown {
-    margin-top: 20px;
+    margin-top: 0px;
     cursor: pointer;
 }
 
@@ -101,4 +90,11 @@ body {
 #stalker,
 #razorfin {
     display: none;
+}
+
+img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
